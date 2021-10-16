@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from rating.views import SimpleFormView
+from rating.views import RatingsListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', SimpleFormView.as_view()),
-    path('form/', SimpleFormView.as_view()),
+    path('', RatingsListView.as_view(), name ='main'),
+    # path('form/', SimpleFormView.as_view()),
 ]
