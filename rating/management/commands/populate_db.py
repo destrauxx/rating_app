@@ -15,16 +15,16 @@ class Command(BaseCommand):
 
         from colorama import init, Fore
         init()
-
+        # Getting a list of generated first and last names from the generator.
         name_generator = 'https://www.name-generator.org.uk/quick/'
+        name_page = requests.get(name_generator).text
+        name_parser = BeautifulSoup(name_page, 'html.parser')
+
         count = options.get('count', 1)
 
         for i in range(count):
-            # Creation of a name by parsing from the site of the name generator,
-            # formatting it to match the format of the record name.
-            name_page = requests.get(name_generator).text
-            name_parser = BeautifulSoup(name_page, 'html.parser')
-            name = name_parser.find(class_ = 'name_heading').get_text().split()
+            # Formatting name to match the format of the record name.
+            name = name_parser.find(class_ = 'name_heading')[i].get_text().split()
             name = name[0] + "_" + name[1] + str(randint(1, 10))
 
             # Making a copy of the number of records in the database before creating the record
